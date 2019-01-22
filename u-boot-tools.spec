@@ -1,5 +1,5 @@
 Name: u-boot-tools
-Version: 2018.11
+Version: 2019.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -13,6 +13,8 @@ Source: %name-%version-%release.tar
 
 BuildRequires: flex libssl-devel libSDL-devel
 
+%def_without sandbox
+
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
 other processors, which can be installed in a boot ROM and used to
@@ -25,16 +27,18 @@ This package contains sandboxed U-Boot and tools.
 %build
 echo CONFIG_HOST_32BIT=y >> configs/sandbox_defconfig
 echo CONFIG_TOOLS_DEBUG=y >> configs/sandbox_defconfig 
-%make_build sandbox_defconfig all
+%make_build sandbox_defconfig %{?_with_sandbox:all}%{!?_with_sandbox:tools}
 
 %install
-install -pm0755 -D u-boot %buildroot%_bindir/u-boot
-install -pm0755 tools/{dumpimage,fdtgrep,gen_eth_addr,mkimage,mkenvimage}  %buildroot%_bindir/
+mkdir -p %buildroot%_bindir
+install -pm0755 tools/{dumpimage,fdtgrep,gen_eth_addr,mkimage,mkenvimage} %{?_with_sandbox:u-boot} %buildroot%_bindir/
 
 %files
-%doc README board/sandbox/README.sandbox
 %_bindir/*
 
 %changelog
+* Tue Jan 22 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2019.01-alt1
+- 2019.01 released
+
 * Fri Jan 11 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2018.11-alt1
 - initial
