@@ -2,7 +2,7 @@ Name: u-boot-tools-env
 Version: 2020.10
 Release: alt1
 
-Summary: Access to the uboot environment from userspace.
+Summary: Access to the uboot environment from userspace
 License: GPLv2+
 Group: System/Kernel and hardware
 
@@ -13,9 +13,6 @@ ExclusiveArch: armh aarch64 %ix86 x86_64 mipsel
 %else
 %define config_name sandbox_defconfig
 %endif
-
-Provides: uboot-tools-env = %version-%release
-Obsoletes: uboot-tools-env
 
 Source: %name-%version-%release.tar
 
