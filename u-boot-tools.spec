@@ -35,7 +35,7 @@ This package includes tools to read (fw_printenv) and modify
 %install
 mkdir -p %buildroot%_sysconfdir
 mkdir -p %buildroot%_bindir
-cp fw_env.config %buildroot%_sysconfdir
+install -pm0644 fw_env.config %buildroot%_sysconfdir
 install -pm0755 tools/env/fw_printenv %buildroot%_bindir/
 ln -s %_bindir/fw_printenv %buildroot%_bindir/fw_setenv
 
