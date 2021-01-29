@@ -60,7 +60,7 @@ ln -rs %buildroot%_bindir/fw_printenv %buildroot%_bindir/fw_setenv
 
 %changelog
 * Fri Jan 29 2021 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 2020.10-alt2
-- build envtools as a subpackage
+- build envtools as a subpackage and added mipsel support
 
 * Tue Oct 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2020.10-alt1
 - 2020.10 released
