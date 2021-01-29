@@ -30,8 +30,6 @@ initialize and test the hardware or to download and run application code.
 This package contains sandboxed U-Boot and tools.
 
 %package env
-Version: 2020.10
-Release: alt2
 Summary: Access to the uboot environment from userspace
 Group:	System/Kernel and hardware
 %description env
