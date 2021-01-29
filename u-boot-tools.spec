@@ -47,7 +47,7 @@ mkdir -p %buildroot%_sysconfdir
 mkdir -p %buildroot%_bindir
 install -pm0755 tools/{dumpimage,fdtgrep,gen_eth_addr,mkimage,mkenvimage,/env/fw_printenv} %{?_with_sandbox:u-boot} %buildroot%_bindir/
 install -pm0644 fw_env.config %buildroot%_sysconfdir
-ln -s %_bindir/fw_printenv %buildroot%_bindir/fw_setenv
+ln -rs %buildroot%_bindir/fw_printenv %buildroot%_bindir/fw_setenv
 
 %files
 %_bindir/*
