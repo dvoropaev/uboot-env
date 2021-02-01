@@ -1,6 +1,6 @@
 Name: u-boot-tools
 Version: 2020.10
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -17,6 +17,12 @@ BuildRequires: flex libssl-devel
 
 %def_without sandbox
 
+%ifarch mipsel
+%define config_name qemu_mipsel_defconfig
+%else
+%define config_name sandbox_defconfig
+%endif
+
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
 other processors, which can be installed in a boot ROM and used to
@@ -27,16 +33,24 @@ This package contains sandboxed U-Boot and tools.
 %setup
 
 %build
-%make_build sandbox_defconfig %{?_with_sandbox:all NO_SDL=1}%{!?_with_sandbox:tools}
+%make_build sandbox_defconfig %{?_with_sandbox:all NO_SDL=1}%{!?_with_sandbox:tools} envtools
 
 %install
+mkdir -p %buildroot%_sysconfdir
 mkdir -p %buildroot%_bindir
-install -pm0755 tools/{dumpimage,fdtgrep,gen_eth_addr,mkimage,mkenvimage} %{?_with_sandbox:u-boot} %buildroot%_bindir/
+install -pm0755 tools/{dumpimage,fdtgrep,gen_eth_addr,mkimage,mkenvimage,/env/fw_printenv} %{?_with_sandbox:u-boot} %buildroot%_bindir/
+install -pm0644 fw_env.config %buildroot%_sysconfdir
+ln -rs %buildroot%_bindir/fw_printenv %buildroot%_bindir/fw_setenv
 
 %files
 %_bindir/*
+%config(noreplace) %_sysconfdir/fw_env.config
 
 %changelog
+* Mon Feb 01 2021 Voropaev Dmitriy <voropaevdmtr@altlinux.org> 2020.10-alt2
+- added utilities fw_printenv and fw_setenv
+- added mipsel support
+
 * Tue Oct 06 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2020.10-alt1
 - 2020.10 released
 
